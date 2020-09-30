@@ -1,68 +1,43 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Collections.Generic;
+using AppKit;
 
 namespace CSE4253_Project1
 {
     class MainClass
     {
+        public static readonly int size = 1000;
+
         public static void Main(string[] args)
         {
-            Console.WriteLine("enter Something");
+            NSApplication.Init();
 
-            var result = new List<char>();
+            // grab the text from the clipboard
+            var text = NSPasteboard.GeneralPasteboard.GetStringForType("NSStringPboardType");
 
-            int verticalP = 0;
-            int horizontalP = 0;
+            var strings = text.Split(new char[] {' ', ',', '.', '?'});
 
-            while (true)
+            string[] tokens = new string[size];
+            for (int i = 0; i < strings.Length; i++)
             {
-                var input = Console.ReadKey(true);
-
-                if (input.Modifiers.HasFlag(ConsoleModifiers.Control) && input.Key.HasFlag(ConsoleKey.Enter))
+                string value = strings[i].Trim();
+                Console.WriteLine(value);
+                if (String.IsNullOrWhiteSpace(value))
                 {
-                    break;
+                    continue;
                 }
-
-                if (char.IsLetterOrDigit(input.KeyChar))
-                {
-                    if (verticalP == result.Count)
-                    {
-                        result.Insert(verticalP++, input.KeyChar);
-                    }
-                    else
-                    {
-                        result[verticalP] = input.KeyChar;
-                    }
-
-                }
-                else if (input.Key == ConsoleKey.LeftArrow && verticalP > 0)
-                { 
-                    verticalP--;
-                    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                }
-                else if (input.Key == ConsoleKey.RightArrow && verticalP < int.MaxValue)
-                {
-                    verticalP++;
-                    Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
-                }
-                else if (input.Key == ConsoleKey.UpArrow && horizontalP < int.MaxValue)
-                {
-                    horizontalP++;
-                    Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 1);
-                }
-                else if (input.Key == ConsoleKey.DownArrow && horizontalP > 0)
-                {
-                    horizontalP--;
-                    Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
-                }
-
-
-
+                tokens[i] = strings[i];
             }
 
+            // sort array
+            Array.Sort(tokens);
 
+            Console.WriteLine("HEREHEREHEREHERHEREHRERHEREHERHERHEREHR\n\n\n\n\n");
+            for (int i = 0; i < strings.Length; i++)
+            {
+                Console.WriteLine(tokens[i]);
+            }
+
+            Console.WriteLine("\n\n\n\n\nEND OF THE PROGRAM");
         }
     }
 }
