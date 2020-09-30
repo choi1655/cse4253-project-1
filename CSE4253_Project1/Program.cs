@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AppKit;
 
 namespace CSE4253_Project1
@@ -10,34 +12,34 @@ namespace CSE4253_Project1
         public static void Main(string[] args)
         {
             NSApplication.Init();
+            Console.Clear();
 
             // grab the text from the clipboard
             var text = NSPasteboard.GeneralPasteboard.GetStringForType("NSStringPboardType");
 
-            var strings = text.Split(new char[] {' ', ',', '.', '?'});
+            var strings = text.Split(new char[] {' ', ',', '.', '?', ';', ':', '!'});
 
+            // sort array
+            Array.Sort(strings);
             string[] tokens = new string[size];
-            for (int i = 0; i < strings.Length; i++)
+            for (int i = 0; i < strings.Length && i < size; i++)
             {
-                string value = strings[i].Trim();
-                Console.WriteLine(value);
+                string value = strings[i].Trim().ToLower();
                 if (String.IsNullOrWhiteSpace(value))
                 {
                     continue;
                 }
-                tokens[i] = strings[i];
+                tokens[i] = value;
             }
 
-            // sort array
-            Array.Sort(tokens);
+            // set for duplicate check
+            var set = new HashSet<string>(tokens);
 
-            Console.WriteLine("HEREHEREHEREHERHEREHRERHEREHERHERHEREHR\n\n\n\n\n");
-            for (int i = 0; i < strings.Length; i++)
+            string[] result = set.ToArray();
+            for (int i = 0; i < result.Length && i < size; i++)
             {
-                Console.WriteLine(tokens[i]);
+                Console.WriteLine(result[i]);
             }
-
-            Console.WriteLine("\n\n\n\n\nEND OF THE PROGRAM");
         }
     }
 }
