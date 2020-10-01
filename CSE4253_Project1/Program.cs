@@ -7,7 +7,7 @@ namespace CSE4253_Project1
 {
     class MainClass
     {
-        public static readonly int size = 1000;
+        public static readonly int SIZE = 1000;
 
         public static void Main(string[] args)
         {
@@ -21,8 +21,8 @@ namespace CSE4253_Project1
 
             // sort array
             Array.Sort(strings);
-            string[] tokens = new string[size];
-            for (int i = 0; i < strings.Length && i < size; i++)
+            string[] tokens = new string[SIZE];
+            for (int i = 0; i < strings.Length && i < SIZE; i++)
             {
                 string value = strings[i].Trim().ToLower();
                 if (String.IsNullOrWhiteSpace(value))
@@ -36,7 +36,7 @@ namespace CSE4253_Project1
             var set = new HashSet<string>(tokens);
 
             string[] result = set.ToArray();
-            for (int i = 0; i < result.Length && i < size; i++)
+            for (int i = 0; i < result.Length && i < SIZE; i++)
             {
                 Console.WriteLine(result[i]);
             }
